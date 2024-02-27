@@ -1,3 +1,7 @@
+-- inspired from the plugin nomodoro created by @dbinagi
+-- Thank you for your work!
+-- I made some changes to be suited for my personal needs
+
 local Menu
 local event
 local NuiText
@@ -27,7 +31,7 @@ local has_dependencies = check_dependencies()
 
 local M = {}
 
-local function show(nomodoro, focus_line)
+local function show(pomodoro, focus_line)
 	if not has_dependencies then
 		return
 	end
@@ -56,7 +60,7 @@ local function show(nomodoro, focus_line)
 			submit = { "<CR>", "<Space>" },
 		},
 		lines = {
-			Menu.separator(tostring(nomodoro.status()), { text_align = "center", char = "" }),
+			Menu.separator(tostring(pomodoro.status()), { text_align = "center", char = "" }),
 			Menu.item("🪓 Work"),
 			Menu.item("☕ Short Break"),
 			Menu.item("🍔 Long Break"),
@@ -69,24 +73,24 @@ local function show(nomodoro, focus_line)
 		on_close = on_close,
 		on_submit = function(item)
 			if item.text == "🪓 Work" then
-				nomodoro.start(vim.g.nomodoro.work_time)
+				pomodoro.start(vim.g.pomodoro.work_time)
 			elseif item.text == "☕ Short Break" then
-				nomodoro.start(vim.g.nomodoro.short_break_time)
+				pomodoro.start(vim.g.pomodoro.short_break_time)
 			elseif item.text == "🍔 Long Break" then
-				nomodoro.start(vim.g.nomodoro.long_break_time)
+				pomodoro.start(vim.g.pomodoro.long_break_time)
 			elseif item.text == "⏹️  Stop" then
-				nomodoro.stop()
+				pomodoro.stop()
 			elseif item.text == "⏯️  Continue" then
-				nomodoro.continue()
+				pomodoro.continue()
 			elseif item.text == "⏯️  Pause" then
-				nomodoro.pause()
+				pomodoro.pause()
 			end
 		end,
 	}
 
-	if nomodoro.is_pause() then
+	if pomodoro.is_pause() then
 		table.insert(menu_options.lines, 1, Menu.item("⏯️  Continue"))
-	elseif nomodoro.is_running() then
+	elseif pomodoro.is_running() then
 		table.insert(menu_options.lines, 1, Menu.item("⏯️  Pause"))
 	end
 
@@ -101,7 +105,7 @@ local function show(nomodoro, focus_line)
 		menu:unmount()
 	end, { noremap = true })
 
-	vim.cmd(":! afplay " .. vim.g.nomodoro.texts.sound_file)
+	vim.cmd(":! afplay " .. vim.g.pomodoro.texts.sound_file)
 	vim.api.nvim_win_set_cursor(menu.winid, { focus_line, 2 })
 end
 
