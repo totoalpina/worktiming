@@ -32,6 +32,7 @@ local DEFAULT_OPTIONS = {
 	break_cycle = 4,
 	menu_available = true,
 	texts = {
+		play_command = "",
 		sound_file = "",
 		on_break_complete = "It's time for more knowledge!",
 		on_work_complete = "Let's take a break!",

@@ -105,7 +105,7 @@ local function show(pomodoro, focus_line)
 		menu:unmount()
 	end, { noremap = true })
 
-	vim.cmd(":! afplay " .. vim.g.pomodoro.texts.sound_file)
+	vim.cmd(":! " .. vim.g.pomodoro.texts.play_command .. " " .. vim.g.pomodoro.texts.sound_file)
 	vim.api.nvim_win_set_cursor(menu.winid, { focus_line, 2 })
 end
 
