@@ -131,22 +131,22 @@ function pomodoro.status()
 	if pomodoro.is_running() or pomodoro.is_pause() then
 		if time_remaining_seconds(total_minutes, start_time) <= 0 then
 			state = DONE
-			if is_work_time(total_minutes) then
-				status_string = vim.g.pomodoro.texts.on_work_complete
-				if not already_notified_end then
-					vim.g.pomodoro.on_work_complete()
-					already_notified_end = true
-					pomodoro.show_menu(2 + (pomodoro.is_short_break() and 0 or 1))
-				end
-			else
-				status_string = vim.g.pomodoro.texts.on_break_complete
-				if not already_notified_end then
-					vim.g.pomodoro.on_break_complete()
-					already_notified_end = true
-					vim.g.break_count = vim.g.break_count + 1
-					pomodoro.show_menu()
-				end
-			end
+			-- if is_work_time(total_minutes) then
+			-- 	status_string = vim.g.pomodoro.texts.on_work_complete
+			-- 	if not already_notified_end then
+			-- 		vim.g.pomodoro.on_work_complete()
+			-- 		already_notified_end = true
+			-- 		pomodoro.show_menu(2 + (pomodoro.is_short_break() and 0 or 1))
+			-- 	end
+			-- else
+			-- 	status_string = vim.g.pomodoro.texts.on_break_complete
+			-- 	if not already_notified_end then
+			-- 		vim.g.pomodoro.on_break_complete()
+			-- 		already_notified_end = true
+			-- 		vim.g.break_count = vim.g.break_count + 1
+			-- 		pomodoro.show_menu()
+			-- 	end
+			-- end
 		else
 			if is_work_time(total_minutes) then
 				status_string = vim.g.pomodoro.texts.status_icon
@@ -177,40 +177,40 @@ end
 
 -- Expose commands
 
-command("NomoWork", function()
+command("PomoWork", function()
 	pomodoro.start(vim.g.pomodoro.work_time)
 end, {})
 
-command("NomoPause", function()
+command("PomoPause", function()
 	if pomodoro.is_running() then
 		pomodoro.pause()
 	end
 end, {})
 
-command("NomoContinue", function()
+command("PomoContinue", function()
 	if pomodoro.is_pause() then
 		pomodoro.continue()
 	end
 end, {})
 
-command("NomoBreak", function()
+command("PomoBreak", function()
 	pomodoro.start_break()
 end, {})
 
-command("NomoStop", function()
+command("PomoStop", function()
 	pomodoro.stop()
 end, {})
 
-command("NomoStatus", function()
+command("PomoStatus", function()
 	print(pomodoro.status())
 end, {})
 
-command("NomoTimer", function(opts)
+command("PomoTimer", function(opts)
 	pomodoro.start(opts.args)
 end, { nargs = 1 })
 
 if menu.has_dependencies then
-	command("NomoMenu", function()
+	command("PomoMenu", function()
 		pomodoro.show_menu()
 	end, {})
 end
