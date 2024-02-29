@@ -119,7 +119,7 @@ end
 
 local previous_status = nil
 function pomodoro.status()
-	local status_string = "🍎 - Idle - 🍎"
+	local status_string = "🍎 - Idle  🍎"
 
 	if previous_status then
 		if pomodoro.is_pause() then
