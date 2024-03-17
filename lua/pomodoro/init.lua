@@ -119,7 +119,11 @@ end
 
 local previous_status = nil
 function pomodoro.status()
-	local status_string = "🍎 - Idle  🍎"
+	local status_string = '"'
+		.. vim.g.pomodoro.texts.status_icon
+		.. " - Idle - "
+		.. vim.g.pomodoro.texts.status_icon
+		.. '"'
 
 	if previous_status then
 		if pomodoro.is_pause() then
